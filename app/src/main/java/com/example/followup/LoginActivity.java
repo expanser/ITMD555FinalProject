@@ -62,13 +62,13 @@ public class LoginActivity extends AppCompatActivity {
     public void showWarnMessage() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
-        builder.setTitle("Wrong Credentials");
+        builder.setTitle("Invalid E-mail or password");
         builder.setMessage("Tries left => " + count);
         builder.show();
     }
 
     public void onSignupClick(View view) {
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        startActivity(new Intent(getApplicationContext(), SignupActivity.class));
     }
 
 }

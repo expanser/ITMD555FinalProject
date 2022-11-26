@@ -1,5 +1,6 @@
 package com.example.followup.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +22,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.followup.NewsAdapter;
 import com.example.followup.R;
+import com.example.followup.SearchActivity;
 import com.example.followup.databinding.FragmentHomeBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwner {
 
@@ -39,6 +42,16 @@ public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwn
         MenuHost menuHost = requireActivity();
         LifecycleOwner owner = getViewLifecycleOwner();
         menuHost.addMenuProvider(this, owner, Lifecycle.State.RESUMED);
+
+        //add search button listener
+        FloatingActionButton searchButton = binding.searchButton;
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity().getApplicationContext(), SearchActivity.class));
+            }
+        });
 
         return root;
     }

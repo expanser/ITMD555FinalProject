@@ -2,7 +2,6 @@ package com.example.followup.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +19,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.followup.ArticleActivity;
 import com.example.followup.NewsAdapter;
 import com.example.followup.R;
 import com.example.followup.SearchActivity;
@@ -68,10 +68,9 @@ public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwn
             @Override
             public void onItemClick(AdapterView arg0, View arg1, int
                     position,long arg3) {
-                Log.i("click", String.valueOf(position));
-//                Intent i = new Intent(getActivity().getApplicationContext(), NewsDetail.class);
-//                i.putExtra("position", position);
-//                startActivity(i);
+                Intent i = new Intent(getActivity().getApplicationContext(), ArticleActivity.class);
+                i.putExtra("position", position);
+                startActivity(i);
             }
         });
     }

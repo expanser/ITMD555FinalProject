@@ -2,8 +2,8 @@ package com.example.followup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -25,10 +25,9 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView arg0, View arg1, int
                     position,long arg3) {
-                Log.i("click", String.valueOf(position));
-//                Intent i = new Intent(getActivity().getApplicationContext(), NewsDetail.class);
-//                i.putExtra("position", position);
-//                startActivity(i);
+                Intent i = new Intent(getApplicationContext(), ArticleActivity.class);
+                i.putExtra("position", position);
+                startActivity(i);
             }
         });
     }

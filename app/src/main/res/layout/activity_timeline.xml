@@ -4,24 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.dashboard.DashboardFragment">
+    tools:context=".TimelineActivity">
 
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/news_list"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="100dp"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
     </ListView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/CollectionButton"
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="66dp"
-        app:backgroundTint="@color/blue_500"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Timeline Title"
+        android:textSize="28sp"
+        android:textColor="@color/blue_500"
+        app:layout_constraintBottom_toTopOf="@+id/news_list"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_save" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

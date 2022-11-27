@@ -24,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginClick(View view) {
 
-        String correctEmail = "nathan@hotmail.com", correctPassword = "123456";
+        String correctEmail = "nathan", correctPassword = "123456";
         EditText email, password;
         email = findViewById(R.id.textUserEmail);
         password = findViewById(R.id.textPassword);
@@ -43,13 +43,15 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (email.getText().toString().equals(correctEmail) && password.getText().toString().equals(correctPassword)) {
-            //go to home page
-            Toast.makeText(this, "Redirecting…",
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Redirecting…", Toast.LENGTH_LONG).show();
+            // go to home page and not allowed to come back
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    Intent intent= new Intent();
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setClass(getApplicationContext(),HomeActivity.class);
+                    startActivity(intent);
                 }
             }, 1000);
         } else {

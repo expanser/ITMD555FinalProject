@@ -8,8 +8,21 @@
 
     <ListView
         android:id="@+id/news_list"
+        android:layout_marginTop="100dp"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
     </ListView>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My News Collections"
+        android:textSize="28sp"
+        android:textColor="@color/blue_500"
+        app:layout_constraintBottom_toTopOf="@+id/news_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

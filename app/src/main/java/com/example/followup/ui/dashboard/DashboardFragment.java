@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.followup.CollectionActivity;
-import com.example.followup.NewsAdapter;
+import com.example.followup.EventAdapter;
 import com.example.followup.R;
 import com.example.followup.TimelineActivity;
 import com.example.followup.databinding.FragmentDashboardBinding;
@@ -48,7 +48,7 @@ public class DashboardFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         //add list
         ListView mListView = getView().findViewById(R.id.news_list);
-        mListView.setAdapter(new NewsAdapter(this.getContext()));
+        mListView.setAdapter(new EventAdapter(this.getContext()));
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

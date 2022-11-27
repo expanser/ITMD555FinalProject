@@ -44,7 +44,7 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // go back to login and not allowed to come back
-                Intent intent=new Intent();
+                Intent intent= new Intent();
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setClass(getActivity().getApplicationContext(),LoginActivity.class);
                 startActivity(intent);

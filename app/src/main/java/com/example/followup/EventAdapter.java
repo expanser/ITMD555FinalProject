@@ -10,30 +10,30 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class NewsAdapter extends BaseAdapter {
+public class EventAdapter extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater mInflator;
-    private ArrayList<NewsItem> newsSource = new ArrayList<>();
+    private ArrayList<EventItem> eventList = new ArrayList<>();
 
-    public NewsAdapter(Context c) {
+    public EventAdapter(Context c) {
         mContext = c;
         mInflator = (LayoutInflater)
                 mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         for (int i = 0; i < 10; i++) {
-            newsSource.add(new NewsItem("news title " + (i + 1) + " titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle", "news source", "create date", R.drawable.avatar));
+            eventList.add(new EventItem("event title " + (i + 1) + " eventeventeventeventeventeventeventeventeventeventevent", "update date", R.drawable.avatar));
         }
     }
 
 
     @Override
     public int getCount() {
-        return newsSource.size();
+        return eventList.size();
     }
 
     @Override
-    public Object getItem(int position) { return newsSource.get(position); }
+    public Object getItem(int position) { return eventList.get(position); }
 
     @Override
     public long getItemId(int position) { return position; }
@@ -47,16 +47,16 @@ public class NewsAdapter extends BaseAdapter {
         TextView source;
 
         if(convertView == null) {
-            convertView = mInflator.inflate(R.layout.news_item_layout,
+            convertView = mInflator.inflate(R.layout.event_item_layout,
                     parent,false);
         }
 
-        thumbnail = convertView.findViewById(R.id.newsThumb);
-        thumbnail.setImageResource(newsSource.get(position).getThumbnail());
-        title = convertView.findViewById(R.id.newsTitle);
-        title.setText(newsSource.get(position).getTitle());
-        source = convertView.findViewById(R.id.newsSource);
-        source.setText(newsSource.get(position).getSource());
+        thumbnail = convertView.findViewById(R.id.eventThumb);
+        thumbnail.setImageResource(eventList.get(position).getThumbnail());
+        title = convertView.findViewById(R.id.eventTitle);
+        title.setText(eventList.get(position).getTitle());
+        source = convertView.findViewById(R.id.eventDate);
+        source.setText(eventList.get(position).getUpdateTime());
 
         return convertView;
     }

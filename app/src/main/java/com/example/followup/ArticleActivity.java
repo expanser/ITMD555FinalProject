@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 public class ArticleActivity extends AppCompatActivity {
 
@@ -24,10 +25,12 @@ public class ArticleActivity extends AppCompatActivity {
     }
 
     public void onMoreClick(View view) {
-        Log.i("position", "onMoreClick");
+        Intent i = new Intent(getApplicationContext(), TimelineActivity.class);
+        i.putExtra("position", 0);
+        startActivity(i);
     }
 
     public void onAddClick(View view) {
-        Log.i("position", "onAddClick");
+        Toast.makeText(this, "Add To Collections Success!", Toast.LENGTH_LONG).show();
     }
 }

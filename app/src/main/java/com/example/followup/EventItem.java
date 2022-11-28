@@ -1,12 +1,14 @@
 package com.example.followup;
 
+import java.time.LocalDateTime;
+
 public class EventItem {
 
     String title;
-    String updateTime;
+    LocalDateTime updateTime;
     int thumbnail;
 
-    public EventItem(String title, String updateTime, int thumbnail) {
+    public EventItem(String title, LocalDateTime updateTime, int thumbnail) {
 
         this.title = title;
         this.updateTime = updateTime;
@@ -21,11 +23,11 @@ public class EventItem {
         this.title = title;
     }
 
-    public String getUpdateTime() {
+    public LocalDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(String updateTime) {
+    public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
 

@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class EventAdapter extends BaseAdapter {
@@ -22,7 +24,7 @@ public class EventAdapter extends BaseAdapter {
                 mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         for (int i = 0; i < 10; i++) {
-            eventList.add(new EventItem("Event Title " + (i + 1) + " Small Business Saturday: Crown Point winter market opens today", "NOVEMBER 26, 2022 / 7:56 AM", R.drawable.avatar));
+            eventList.add(new EventItem("Event Title " + (i + 1) + " Small Business Saturday: Crown Point winter market opens today", LocalDateTime.of(2022, 11, 26, 7, 56, 0), R.drawable.avatar));
         }
     }
 
@@ -55,8 +57,10 @@ public class EventAdapter extends BaseAdapter {
         thumbnail.setImageResource(eventList.get(position).getThumbnail());
         title = convertView.findViewById(R.id.eventTitle);
         title.setText(eventList.get(position).getTitle());
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMMM dd, yyyy / HH:mm a");
         source = convertView.findViewById(R.id.eventDate);
-        source.setText(eventList.get(position).getUpdateTime());
+        source.setText(dtf.format(eventList.get(position).getUpdateTime()));
 
         return convertView;
     }

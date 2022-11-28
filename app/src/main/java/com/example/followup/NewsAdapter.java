@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class NewsAdapter extends BaseAdapter {
@@ -22,7 +23,7 @@ public class NewsAdapter extends BaseAdapter {
                 mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         for (int i = 0; i < 10; i++) {
-            newsSource.add(new NewsItem("News Title " + (i + 1) + " Thanksgiving holiday travel expected to reach nearly pre-pandemic levels", "CBS CHICAGO", "NOVEMBER 27, 2022 / 6:19 PM", R.drawable.avatar));
+            newsSource.add(new NewsItem("News Title " + (i + 1) + " Thanksgiving holiday travel expected to reach nearly pre-pandemic levels", "CBS CHICAGO", LocalDateTime.of(2022, 11, 27, 18, 19, 0), R.drawable.avatar));
         }
     }
 

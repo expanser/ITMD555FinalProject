@@ -1,13 +1,15 @@
 package com.example.followup;
 
+import java.time.LocalDateTime;
+
 public class NewsItem {
 
     String title;
     String source;
-    String createTime;
+    LocalDateTime createTime;
     int thumbnail;
 
-    public NewsItem(String title, String source, String createTime, int thumbnail) {
+    public NewsItem(String title, String source, LocalDateTime createTime, int thumbnail) {
 
         this.title = title;
         this.source = source;
@@ -31,11 +33,11 @@ public class NewsItem {
         this.source = artist;
     }
 
-    public String getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 

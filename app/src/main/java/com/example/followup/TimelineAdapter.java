@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class TimelineAdapter extends BaseAdapter {
@@ -22,7 +24,7 @@ public class TimelineAdapter extends BaseAdapter {
                 mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         for (int i = 0; i < 10; i++) {
-            timelineList.add(new NewsItem("Timeline News Title " + (i + 1) + " Extra-alarm fire sweeps through vacant Back of the Yards furniture warehouse", "CBS CHICAGO", "NOVEMBER 25, 2022 / 10:15 PM", R.drawable.avatar));
+            timelineList.add(new NewsItem("Timeline News Title " + (i + 1) + " Extra-alarm fire sweeps through vacant Back of the Yards furniture warehouse", "CBS CHICAGO", LocalDateTime.of(2022, 11, 25, 22, 15, 0), R.drawable.avatar));
         }
     }
 
@@ -58,8 +60,10 @@ public class TimelineAdapter extends BaseAdapter {
         title.setText(timelineList.get(position).getTitle());
         source = convertView.findViewById(R.id.newsSource);
         source.setText(timelineList.get(position).getSource());
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMMM dd, yyyy / HH:mm a");
         createTime = convertView.findViewById(R.id.newsDate);
-        createTime.setText(timelineList.get(position).getCreateTime());
+        createTime.setText(dtf.format(timelineList.get(position).getCreateTime()));
 
         return convertView;
     }

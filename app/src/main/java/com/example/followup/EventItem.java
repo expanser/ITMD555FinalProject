@@ -25,8 +25,8 @@ public class EventItem {
         return updateTime;
     }
 
-    public void setUpdateTime(String price) {
-        this.updateTime = price;
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
     }
 
     public int getThumbnail() {

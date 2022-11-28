@@ -18,7 +18,10 @@ public class MainActivity extends AppCompatActivity {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                Intent intent= new Intent();
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setClass(getApplicationContext(),HomeActivity.class);
+                startActivity(intent);
             }
         }, 1000);
     }

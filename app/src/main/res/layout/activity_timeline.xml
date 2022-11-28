@@ -7,7 +7,7 @@
     tools:context=".TimelineActivity">
 
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/news_list"
+        android:id="@+id/timeline_list"
         android:layout_marginTop="100dp"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
@@ -20,7 +20,7 @@
         android:text="Timeline Title"
         android:textSize="28sp"
         android:textColor="@color/blue_500"
-        app:layout_constraintBottom_toTopOf="@+id/news_list"
+        app:layout_constraintBottom_toTopOf="@+id/timeline_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

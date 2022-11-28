@@ -35,8 +35,8 @@ public class NewsItem {
         return createTime;
     }
 
-    public void setCreateTime(String price) {
-        this.createTime = price;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
     public int getThumbnail() {

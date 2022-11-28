@@ -47,7 +47,7 @@ public class DashboardFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //add list
-        ListView mListView = getView().findViewById(R.id.news_list);
+        ListView mListView = getView().findViewById(R.id.event_list);
         mListView.setAdapter(new EventAdapter(this.getContext()));
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

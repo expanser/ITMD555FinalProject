@@ -20,8 +20,8 @@ public class TimelineActivity extends AppCompatActivity {
         int position = i.getIntExtra("position", 0);
         Log.i("position", String.valueOf(position));
 
-        ListView mListView = findViewById(R.id.news_list);
-        mListView.setAdapter(new NewsAdapter(this));
+        ListView mListView = findViewById(R.id.timeline_list);
+        mListView.setAdapter(new TimelineAdapter(this));
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

@@ -22,7 +22,7 @@ public class EventAdapter extends BaseAdapter {
                 mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         for (int i = 0; i < 10; i++) {
-            eventList.add(new EventItem("event title " + (i + 1) + " eventeventeventeventeventeventeventeventeventeventevent", "update date", R.drawable.avatar));
+            eventList.add(new EventItem("Event Title " + (i + 1) + " Small Business Saturday: Crown Point winter market opens today", "NOVEMBER 26, 2022 / 7:56 AM", R.drawable.avatar));
         }
     }
 

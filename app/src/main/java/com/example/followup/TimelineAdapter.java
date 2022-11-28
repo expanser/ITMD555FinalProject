@@ -22,7 +22,7 @@ public class TimelineAdapter extends BaseAdapter {
                 mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         for (int i = 0; i < 10; i++) {
-            timelineList.add(new NewsItem("timeline news title " + (i + 1) + " titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle", "news source", "create date", R.drawable.avatar));
+            timelineList.add(new NewsItem("Timeline News Title " + (i + 1) + " Extra-alarm fire sweeps through vacant Back of the Yards furniture warehouse", "CBS CHICAGO", "NOVEMBER 25, 2022 / 10:15 PM", R.drawable.avatar));
         }
     }
 

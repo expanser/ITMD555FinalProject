@@ -22,7 +22,7 @@ public class NewsAdapter extends BaseAdapter {
                 mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         for (int i = 0; i < 10; i++) {
-            newsSource.add(new NewsItem("news title " + (i + 1) + " titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle", "news source", "create date", R.drawable.avatar));
+            newsSource.add(new NewsItem("News Title " + (i + 1) + " Thanksgiving holiday travel expected to reach nearly pre-pandemic levels", "CBS CHICAGO", "NOVEMBER 27, 2022 / 6:19 PM", R.drawable.avatar));
         }
     }
 

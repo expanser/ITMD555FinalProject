@@ -21,7 +21,7 @@ public class ArticleActivity extends AppCompatActivity {
         Log.i("position", String.valueOf(position));
 
         WebView mWebview = findViewById(R.id.webView);
-        mWebview.loadUrl("https://www.google.com/");
+        mWebview.loadUrl("https://www.cbsnews.com/chicago/local-news/");
     }
 
     public void onMoreClick(View view) {

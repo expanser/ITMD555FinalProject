@@ -8,6 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class TimelineActivity extends AppCompatActivity {
 
@@ -20,6 +23,7 @@ public class TimelineActivity extends AppCompatActivity {
         int position = i.getIntExtra("position", 0);
         Log.i("position", String.valueOf(position));
 
+        //add list
         ListView mListView = findViewById(R.id.timeline_list);
         mListView.setAdapter(new TimelineAdapter(this));
 
@@ -31,6 +35,16 @@ public class TimelineActivity extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), ArticleActivity.class);
                 i.putExtra("position", position);
                 startActivity(i);
+            }
+        });
+
+        //add save to collection button listener
+        FloatingActionButton SaveButton = findViewById(R.id.SaveButton);
+
+        SaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Add To Collections Success!", Toast.LENGTH_LONG).show();
             }
         });
     }

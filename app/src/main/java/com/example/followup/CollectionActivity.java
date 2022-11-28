@@ -15,6 +15,7 @@ public class CollectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection);
 
+        //add list
         ListView mListView = findViewById(R.id.news_list);
         mListView.setAdapter(new NewsAdapter(this));
 

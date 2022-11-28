@@ -17,6 +17,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void onSearchClick(View view) {
+        //add list
         ListView mListView = findViewById(R.id.news_list);
         mListView.setAdapter(new NewsAdapter(this));
 

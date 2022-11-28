@@ -36,5 +36,5 @@
         app:backgroundTint="@color/blue_500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_save" />
+        app:srcCompat="@android:drawable/ic_input_get" />
 </androidx.constraintlayout.widget.ConstraintLayout>

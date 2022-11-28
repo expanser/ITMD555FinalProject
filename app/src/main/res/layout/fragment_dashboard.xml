@@ -18,7 +18,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Event List"
+        android:text="My Event List"
         android:textSize="28sp"
         android:textColor="@color/blue_500"
         app:layout_constraintBottom_toTopOf="@+id/event_list"

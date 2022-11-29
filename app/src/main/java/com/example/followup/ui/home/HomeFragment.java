@@ -89,7 +89,8 @@ public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwn
     @Override
     public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-            case R.id.action_all:
+            //type
+            case R.id.action_all_type:
 //                addSomething();
                 return true;
             case R.id.action_world:
@@ -105,6 +106,19 @@ public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwn
             case R.id.action_entertainment:
                 return true;
             case R.id.action_sport:
+                return true;
+            //source
+            case R.id.action_all_source:
+                return true;
+            case R.id.action_cbs:
+                return true;
+            case R.id.action_nbc:
+                return true;
+            case R.id.action_fox:
+                return true;
+            case R.id.action_cnn:
+                return true;
+            case R.id.action_bbc:
                 return true;
             default:
                 return false;

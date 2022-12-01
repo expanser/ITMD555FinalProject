@@ -62,9 +62,8 @@ public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwn
         //add list
         ListView mListView = getView().findViewById(R.id.news_list);
         mListView.setAdapter(new NewsAdapter(this.getContext()));
-
+        //click to go to article
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView arg0, View arg1, int
                     position,long arg3) {
@@ -73,6 +72,7 @@ public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwn
                 startActivity(i);
             }
         });
+//        List<User> list = new ArrayList<>(task.getResult().toObjects(User.class));
     }
 
     @Override

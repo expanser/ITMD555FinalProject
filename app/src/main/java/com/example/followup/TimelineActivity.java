@@ -10,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class TimelineActivity extends AppCompatActivity {
@@ -25,7 +27,7 @@ public class TimelineActivity extends AppCompatActivity {
 
         //add list
         ListView mListView = findViewById(R.id.timeline_list);
-        mListView.setAdapter(new TimelineAdapter(this));
+        mListView.setAdapter(new TimelineAdapter(this, new ArrayList<>()));
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

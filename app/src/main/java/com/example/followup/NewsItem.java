@@ -1,20 +1,21 @@
 package com.example.followup;
 
-import java.time.LocalDateTime;
-
 public class NewsItem {
 
-    String title;
-    String source;
-    LocalDateTime createTime;
-    int thumbnail;
+    private String title,type,source,link,thumbnail,eventId;
+    Long releaseTime;
 
-    public NewsItem(String title, String source, LocalDateTime createTime, int thumbnail) {
+    public NewsItem() {
+    }
 
+    public NewsItem(String title, String type, String source, String link, String thumbnail, String eventId, Long releaseTime) {
         this.title = title;
+        this.type = type;
         this.source = source;
-        this.createTime = createTime;
+        this.link = link;
         this.thumbnail = thumbnail;
+        this.eventId = eventId;
+        this.releaseTime = releaseTime;
     }
 
     public String getTitle() {
@@ -25,27 +26,64 @@ public class NewsItem {
         this.title = title;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getSource() {
         return source;
     }
 
-    public void setSource(String artist) {
-        this.source = artist;
+    public void setSource(String source) {
+        this.source = source;
     }
 
-    public LocalDateTime getCreateTime() {
-        return createTime;
+    public String getLink() {
+        return link;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
+    public void setLink(String link) {
+        this.link = link;
     }
 
-    public int getThumbnail() {
+    public String getThumbnail() {
         return thumbnail;
     }
 
-    public void setThumbnail(int thumbnail) {
+    public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
+    }
+
+    public Long getReleaseTime() {
+        return releaseTime;
+    }
+
+    public void setReleaseTime(Long releaseTime) {
+        this.releaseTime = releaseTime;
+    }
+
+    @Override
+    public String toString() {
+        return "NewsItem{" +
+                "title='" + title + '\'' +
+                ", type='" + type + '\'' +
+                ", source='" + source + '\'' +
+                ", link='" + link + '\'' +
+                ", thumbnail='" + thumbnail + '\'' +
+                ", eventId='" + eventId + '\'' +
+                ", releaseTime=" + releaseTime +
+                '}';
     }
 }

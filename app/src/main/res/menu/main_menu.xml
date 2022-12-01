@@ -13,6 +13,10 @@
                 android:title="World">
             </item>
             <item
+                android:id="@+id/action_politics"
+                android:title="Politics">
+            </item>
+            <item
                 android:id="@+id/action_business"
                 android:title="Business">
             </item>

@@ -8,23 +8,20 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class NewsAdapter extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater mInflator;
-    private ArrayList<NewsItem> newsSource = new ArrayList<>();
+    private List<NewsItem> newsSource = new ArrayList<>();
 
-    public NewsAdapter(Context c) {
+    public NewsAdapter(Context c, List<NewsItem> list) {
         mContext = c;
         mInflator = (LayoutInflater)
                 mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        for (int i = 0; i < 10; i++) {
-            newsSource.add(new NewsItem("News Title " + (i + 1) + " Thanksgiving holiday travel expected to reach nearly pre-pandemic levels", "CBS CHICAGO", LocalDateTime.of(2022, 11, 27, 18, 19, 0), R.drawable.avatar));
-        }
+        newsSource = list;
     }
 
 
@@ -43,7 +40,6 @@ public class NewsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup
             parent)
     {
-        ImageView thumbnail;
         TextView title;
         TextView source;
 
@@ -52,12 +48,11 @@ public class NewsAdapter extends BaseAdapter {
                     parent,false);
         }
 
-        thumbnail = convertView.findViewById(R.id.newsThumb);
-        thumbnail.setImageResource(newsSource.get(position).getThumbnail());
         title = convertView.findViewById(R.id.newsTitle);
         title.setText(newsSource.get(position).getTitle());
         source = convertView.findViewById(R.id.newsSource);
         source.setText(newsSource.get(position).getSource());
+        new ImageLoader((ImageView) convertView.findViewById(R.id.newsThumb)).execute(newsSource.get(position).getThumbnail());
 
         return convertView;
     }

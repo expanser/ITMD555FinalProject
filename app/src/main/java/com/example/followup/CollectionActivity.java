@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 public class CollectionActivity extends AppCompatActivity {
 
     @Override
@@ -20,7 +22,7 @@ public class CollectionActivity extends AppCompatActivity {
 
         //add list
         ListView mListView = findViewById(R.id.news_list);
-        mListView.setAdapter(new NewsAdapter(this));
+        mListView.setAdapter(new NewsAdapter(this, new ArrayList<>()));
         //click to go to article
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

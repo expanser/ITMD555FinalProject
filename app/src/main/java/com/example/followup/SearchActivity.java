@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 public class SearchActivity extends AppCompatActivity {
 
     @Override
@@ -19,7 +21,7 @@ public class SearchActivity extends AppCompatActivity {
     public void onSearchClick(View view) {
         //add list
         ListView mListView = findViewById(R.id.news_list);
-        mListView.setAdapter(new NewsAdapter(this));
+        mListView.setAdapter(new NewsAdapter(this, new ArrayList<>()));
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

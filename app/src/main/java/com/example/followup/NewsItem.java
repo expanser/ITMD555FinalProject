@@ -2,13 +2,14 @@ package com.example.followup;
 
 public class NewsItem {
 
-    private String title,type,source,link,thumbnail,eventId;
+    private String id, title, type, source, link, thumbnail, eventId;
     Long releaseTime;
 
     public NewsItem() {
     }
 
-    public NewsItem(String title, String type, String source, String link, String thumbnail, String eventId, Long releaseTime) {
+    public NewsItem(String id, String title, String type, String source, String link, String thumbnail, String eventId, Long releaseTime) {
+        this.id = id;
         this.title = title;
         this.type = type;
         this.source = source;
@@ -17,6 +18,12 @@ public class NewsItem {
         this.eventId = eventId;
         this.releaseTime = releaseTime;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) { this.id = id; }
 
     public String getTitle() {
         return title;
@@ -77,7 +84,8 @@ public class NewsItem {
     @Override
     public String toString() {
         return "NewsItem{" +
-                "title='" + title + '\'' +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
                 ", type='" + type + '\'' +
                 ", source='" + source + '\'' +
                 ", link='" + link + '\'' +

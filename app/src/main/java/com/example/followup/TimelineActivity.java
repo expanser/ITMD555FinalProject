@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -17,8 +19,6 @@ import java.util.List;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -76,23 +76,23 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     public void getTimelineInfo () {
-        //todo
-        DocumentReference docRef = db.collection("eventlist").document(eventId);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.i("eventItem--", "DocumentSnapshot data: " + document.getData());
-                    } else {
-                        Log.i("eventItem--", "No such document" + eventId);
+        db.collection("eventlist")
+                .whereEqualTo("id", eventId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            EventItem eventItem = task.getResult().toObjects(EventItem.class).get(0);
+
+                            TextView titleView = findViewById(R.id.titleView);
+                            titleView.setText(eventItem.getTitle());
+                            new ImageLoader((ImageView) findViewById(R.id.eventThumb)).execute(eventItem.getThumbnail());
+                        } else {
+                            Log.w("onFailure", "Error getting documents.", task.getException());
+                        }
                     }
-                } else {
-                    Log.i("eventItem--", "get failed with ", task.getException());
-                }
-            }
-        });
+                });
     }
 
     public void getTimelineList () {

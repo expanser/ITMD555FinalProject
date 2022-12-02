@@ -2,15 +2,22 @@ package com.example.followup;
 
 public class EventItem {
 
-    String title, thumbnail;
+    String id, title, thumbnail;
     Long updateTime;
 
-    public EventItem(String title, Long updateTime, String thumbnail) {
+    public EventItem() {
+    }
 
+    public EventItem(String id, String title, Long updateTime, String thumbnail) {
+        this.id = id;
         this.title = title;
         this.updateTime = updateTime;
         this.thumbnail = thumbnail;
     }
+
+    public String getId() { return id; }
+
+    public void setId(String id) { this.id = id; }
 
     public String getTitle() {
         return title;
@@ -35,7 +42,8 @@ public class EventItem {
     @Override
     public String toString() {
         return "EventItem{" +
-                "title='" + title + '\'' +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
                 ", thumbnail='" + thumbnail + '\'' +
                 ", updateTime=" + updateTime +
                 '}';

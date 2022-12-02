@@ -99,6 +99,7 @@ public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwn
         long millis = zdt.toInstant().toEpochMilli();
 
         EventItem eventItem = new EventItem(
+                "",
                 "Test event timeline title 3",
                 millis,
                 "https://media-cldnry.s-nbcnews.com/image/upload/t_focal-200x100,f_auto,q_auto:best/rockcms/2022-09/220915-mar-a-lago-TrumpFBI-ac-723p-6e4e5f.jpg"
@@ -109,6 +110,9 @@ public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwn
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d("onSuccess", "DocumentSnapshot added with ID: " + documentReference.getId());
+                        eventItem.setId(documentReference.getId());
+                        db.collection("eventlist").document(documentReference.getId()).set(eventItem);
+                        //put id in field makes it easier to query
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -126,6 +130,7 @@ public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwn
         long millis = zdt.toInstant().toEpochMilli();
 
         NewsItem newsItem = new NewsItem(
+                "",
                 "US appeals court denies Trump 'special master' request in documents case",
                 "politics",
                 "BBC",
@@ -140,6 +145,9 @@ public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwn
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d("onSuccess", "DocumentSnapshot added with ID: " + documentReference.getId());
+                        newsItem.setId(documentReference.getId());
+                        db.collection("newslist").document(documentReference.getId()).set(newsItem);
+                        //put id in field makes it easier to query
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

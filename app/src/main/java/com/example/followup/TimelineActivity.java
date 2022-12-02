@@ -3,7 +3,9 @@ package com.example.followup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,8 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -27,6 +32,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class TimelineActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
+    SharedPreferences sharedPreferences;
     String eventId;
 
     @Override
@@ -49,20 +55,6 @@ public class TimelineActivity extends AppCompatActivity {
 
         getTimelineList();
         getTimelineInfo();
-        //add list
-        ListView mListView = findViewById(R.id.timeline_list);
-        mListView.setAdapter(new TimelineAdapter(this, new ArrayList<>()));
-
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView arg0, View arg1, int
-                    position, long arg3) {
-                Intent i = new Intent(getApplicationContext(), ArticleActivity.class);
-                i.putExtra("position", position);
-                startActivity(i);
-            }
-        });
 
         //add save to collection button listener
         FloatingActionButton SaveButton = findViewById(R.id.SaveButton);
@@ -70,9 +62,47 @@ public class TimelineActivity extends AppCompatActivity {
         SaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Add To Collections Success!", Toast.LENGTH_LONG).show();
+                sharedPreferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+                String userId = sharedPreferences.getString("id","");
+                //check if it has been added before
+                db.collection("eventmarklist")
+                        .whereEqualTo("userId", userId)
+                        .whereEqualTo("eventId", eventId)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    if (task.getResult().size() > 0) {
+                                        Toast.makeText(getApplicationContext(), "This event has been added already",
+                                                Toast.LENGTH_LONG).show();
+                                    }  else {
+                                        addToEventBookmark(new EventBookmark( userId, eventId ));
+                                    }
+                                } else {
+                                    Log.w("onFailure", "Error getting documents.", task.getException());
+                                }
+                            }
+                        });
             }
         });
+    }
+
+    public void addToEventBookmark (EventBookmark eventBookmark) {
+        db.collection("eventmarklist").add(eventBookmark).
+                addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("onSuccess", "DocumentSnapshot added with ID: " + documentReference.getId());
+                        Toast.makeText(getApplicationContext(), "Add To Collections Success!", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("onFailure", "Error adding document", e);
+                    }
+                });
     }
 
     public void getTimelineInfo () {

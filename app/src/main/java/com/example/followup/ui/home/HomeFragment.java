@@ -33,6 +33,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.time.LocalDateTime;
@@ -45,6 +46,8 @@ public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwn
 
     private FragmentHomeBinding binding;
     private FirebaseFirestore db;
+    private String querySource = "";
+    private String queryType = "";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -89,16 +92,16 @@ public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwn
 
     public void addNews() {
         //get timestamp from LocalDateTime
-        LocalDateTime ldt = LocalDateTime.of(2022, 12, 1, 14, 20, 0);
+        LocalDateTime ldt = LocalDateTime.of(2022, 12, 1, 20, 0, 0);
         ZonedDateTime zdt = ldt.atZone(ZoneId.of("America/Chicago"));
         long millis = zdt.toInstant().toEpochMilli();
 
         NewsItem newsItem = new NewsItem(
-                "Biden and Macron present united front against Russia in first state visit",
+                "US appeals court denies Trump 'special master' request in documents case",
                 "politics",
-                "CBS",
-                "https://www.cbsnews.com/live-updates/biden-macron-russia-ukraine-state-visit-white-house/",
-                "https://assets2.cbsnewsstatic.com/hub/i/r/2022/12/01/7dfa66ca-ba40-4e77-9d57-0528b8b1854c/thumbnail/620x413/de1ccc615e22713813bf731a1c8b6baf/gettyimages-1245278397.jpg",
+                "BBC",
+                "https://www.bbc.com/news/world-us-canada-63829125",
+                "https://ichef.bbci.co.uk/news/976/cpsprodpb/78C4/production/_127861903_gettyimages-1439879814.jpg",
                 null,
                 millis
         );
@@ -119,11 +122,21 @@ public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwn
     }
 
     public void getNewsList() {
-        db.collection("newslist")
-//                .whereEqualTo("source", "")
-//                .whereEqualTo("type", "")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        Query query = null;
+        if (querySource.equals("") && queryType.equals("")) {
+            query = db.collection("newslist");
+        } else if (!querySource.equals("") && !queryType.equals("")) {
+            query = db.collection("newslist")
+                    .whereEqualTo("source", querySource)
+                    .whereEqualTo("type", queryType);
+        } else if (!querySource.equals("")) {
+            query = db.collection("newslist")
+                    .whereEqualTo("source", querySource);
+        } else {
+            query = db.collection("newslist")
+                    .whereEqualTo("type", queryType);
+        }
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
@@ -157,39 +170,55 @@ public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwn
         switch (menuItem.getItemId()) {
             //type
             case R.id.action_all_type:
-//                addSomething();
-                return true;
+                queryType = "";
+                break;
             case R.id.action_world:
-                return true;
+                queryType = "world";
+                break;
             case R.id.action_politics:
-                return true;
+                queryType = "politics";
+                break;
             case R.id.action_business:
-                return true;
-            case R.id.action_tech:
-                return true;
+                queryType = "business";
+                break;
+            case R.id.action_technology:
+                queryType = "technology";
+                break;
             case R.id.action_science:
-                return true;
+                queryType = "science";
+                break;
             case R.id.action_health:
-                return true;
+                queryType = "health";
+                break;
             case R.id.action_entertainment:
-                return true;
+                queryType = "entertainment";
+                break;
             case R.id.action_sport:
-                return true;
+                queryType = "sport";
+                break;
             //source
             case R.id.action_all_source:
-                return true;
+                querySource= "";
+                break;
             case R.id.action_cbs:
-                return true;
+                querySource= "CBS";
+                break;
             case R.id.action_nbc:
-                return true;
+                querySource= "NBC";
+                break;
             case R.id.action_fox:
-                return true;
+                querySource= "FOX";
+                break;
             case R.id.action_cnn:
-                return true;
+                querySource= "CNN";
+                break;
             case R.id.action_bbc:
-                return true;
+                querySource= "BBC";
+                break;
             default:
                 return false;
         }
+        getNewsList();
+        return true;
     }
 }

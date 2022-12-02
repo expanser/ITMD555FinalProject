@@ -21,8 +21,8 @@
                 android:title="Business">
             </item>
             <item
-                android:id="@+id/action_tech"
-                android:title="Tech">
+                android:id="@+id/action_technology"
+                android:title="Technology">
             </item>
             <item
                 android:id="@+id/action_science"

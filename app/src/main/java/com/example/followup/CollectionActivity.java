@@ -16,9 +16,17 @@ import java.util.ArrayList;
 public class CollectionActivity extends AppCompatActivity {
 
     @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //add list
         ListView mListView = findViewById(R.id.news_list);

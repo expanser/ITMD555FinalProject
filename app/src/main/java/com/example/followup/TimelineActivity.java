@@ -17,9 +17,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class TimelineActivity extends AppCompatActivity {
 
     @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Intent i = getIntent();
         int position = i.getIntExtra("position", 0);

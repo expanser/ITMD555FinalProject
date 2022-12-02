@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Toast;
 
 public class ArticleActivity extends AppCompatActivity {
+
+    String id;
+    String link;
+    String eventId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,17 +20,21 @@ public class ArticleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_article);
 
         Intent i = getIntent();
-        int position = i.getIntExtra("position", 0);
-        Log.i("position", String.valueOf(position));
-
+        id = i.getStringExtra("id");
+        link = i.getStringExtra("link");
+        eventId = i.getStringExtra("eventId");
         WebView mWebview = findViewById(R.id.webView);
-        mWebview.loadUrl("https://www.cbsnews.com/chicago/local-news/");
+        mWebview.loadUrl(link);
     }
 
     public void onMoreClick(View view) {
-        Intent i = new Intent(getApplicationContext(), TimelineActivity.class);
-        i.putExtra("position", 0);
-        startActivity(i);
+        if (eventId != null) {
+            Intent i = new Intent(getApplicationContext(), TimelineActivity.class);
+            i.putExtra("id", eventId);
+            startActivity(i);
+        } else {
+            Toast.makeText(this, "This news is not related to an event yet!", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void onAddClick(View view) {

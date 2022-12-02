@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -50,7 +51,12 @@ public class SearchActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            List<NewsItem> list = new ArrayList<>(task.getResult().toObjects(NewsItem.class));
+                            List<NewsItem> list = new ArrayList<>();
+                            List<String> ids = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                ids.add(document.getId());
+                                list.add(document.toObject(NewsItem.class));
+                            }
                             ListView mListView = findViewById(R.id.news_list);
                             mListView.setAdapter(new NewsAdapter(getApplicationContext(), list));
                             //click to go to article
@@ -59,7 +65,9 @@ public class SearchActivity extends AppCompatActivity {
                                 public void onItemClick(AdapterView arg0, View arg1, int
                                         position,long arg3) {
                                     Intent i = new Intent(getApplicationContext(), ArticleActivity.class);
-                                    i.putExtra("position", position);
+                                    i.putExtra("id", ids.get(position));
+                                    i.putExtra("link", list.get(position).getLink());
+                                    i.putExtra("eventId", list.get(position).getEventId());
                                     startActivity(i);
                                 }
                             });

@@ -31,4 +31,13 @@ public class EventItem {
     public String getThumbnail() { return thumbnail; }
 
     public void setThumbnail(String thumbnail) { this.thumbnail = thumbnail; }
+
+    @Override
+    public String toString() {
+        return "EventItem{" +
+                "title='" + title + '\'' +
+                ", thumbnail='" + thumbnail + '\'' +
+                ", updateTime=" + updateTime +
+                '}';
+    }
 }

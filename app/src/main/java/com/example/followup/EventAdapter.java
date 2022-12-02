@@ -8,24 +8,24 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class EventAdapter extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater mInflator;
-    private ArrayList<EventItem> eventList = new ArrayList<>();
+    private List<EventItem> eventList = new ArrayList<>();
 
-    public EventAdapter(Context c) {
+    public EventAdapter(Context c, List<EventItem> list) {
         mContext = c;
         mInflator = (LayoutInflater)
                 mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        for (int i = 0; i < 10; i++) {
-            eventList.add(new EventItem("Event Title " + (i + 1) + " Small Business Saturday: Crown Point winter market opens today", LocalDateTime.of(2022, 11, 26, 7, 56, 0), R.drawable.avatar));
-        }
+        eventList = list;
     }
 
 
@@ -44,23 +44,26 @@ public class EventAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup
             parent)
     {
-        ImageView thumbnail;
         TextView title;
-        TextView source;
+        TextView eventDate;
 
         if(convertView == null) {
             convertView = mInflator.inflate(R.layout.event_item_layout,
                     parent,false);
         }
 
-        thumbnail = convertView.findViewById(R.id.eventThumb);
-        thumbnail.setImageResource(eventList.get(position).getThumbnail());
         title = convertView.findViewById(R.id.eventTitle);
         title.setText(eventList.get(position).getTitle());
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMMM dd, yyyy / HH:mm a");
-        source = convertView.findViewById(R.id.eventDate);
-        source.setText(dtf.format(eventList.get(position).getUpdateTime()));
+        eventDate = convertView.findViewById(R.id.eventDate);
+        Long timestamp = eventList.get(position).getUpdateTime();
+        LocalDateTime triggerTime =
+                LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp),
+                        ZoneId.of("America/Chicago"));
+        eventDate.setText(dtf.format(triggerTime));
+
+        new ImageLoader((ImageView) convertView.findViewById(R.id.eventThumb)).execute(eventList.get(position).getThumbnail());
 
         return convertView;
     }

@@ -21,6 +21,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.followup.ArticleActivity;
+import com.example.followup.EventItem;
 import com.example.followup.NewsAdapter;
 import com.example.followup.NewsItem;
 import com.example.followup.R;
@@ -80,7 +81,7 @@ public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwn
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+//        addEvent();
 //        addNews();
         getNewsList();
     }
@@ -89,6 +90,33 @@ public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwn
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public void addEvent() {
+        //get timestamp from LocalDateTime
+        LocalDateTime ldt = LocalDateTime.of(2022, 11, 30, 15, 55, 0);
+        ZonedDateTime zdt = ldt.atZone(ZoneId.of("America/Chicago"));
+        long millis = zdt.toInstant().toEpochMilli();
+
+        EventItem eventItem = new EventItem(
+                "Test event timeline title 3",
+                millis,
+                "https://media-cldnry.s-nbcnews.com/image/upload/t_focal-200x100,f_auto,q_auto:best/rockcms/2022-09/220915-mar-a-lago-TrumpFBI-ac-723p-6e4e5f.jpg"
+                );
+
+        db.collection("eventlist").add(eventItem).
+                addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("onSuccess", "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("onFailure", "Error adding document", e);
+                    }
+                });
     }
 
     public void addNews() {

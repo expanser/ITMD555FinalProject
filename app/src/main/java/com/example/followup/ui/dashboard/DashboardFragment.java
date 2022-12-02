@@ -22,6 +22,8 @@ import com.example.followup.TimelineActivity;
 import com.example.followup.databinding.FragmentDashboardBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+
 public class DashboardFragment extends Fragment {
 
     private FragmentDashboardBinding binding;
@@ -51,7 +53,7 @@ public class DashboardFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         //add list
         ListView mListView = getView().findViewById(R.id.event_list);
-        mListView.setAdapter(new EventAdapter(this.getContext()));
+        mListView.setAdapter(new EventAdapter(this.getContext(), new ArrayList<>()));
         //click to go to timeline
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

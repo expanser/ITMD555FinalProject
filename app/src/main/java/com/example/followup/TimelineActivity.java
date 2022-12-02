@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -15,6 +14,8 @@ import java.util.ArrayList;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class TimelineActivity extends AppCompatActivity {
+
+    String eventId;
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -30,8 +31,7 @@ public class TimelineActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Intent i = getIntent();
-        int position = i.getIntExtra("position", 0);
-        Log.i("position", String.valueOf(position));
+        eventId = i.getStringExtra("id");
 
         //add list
         ListView mListView = findViewById(R.id.timeline_list);

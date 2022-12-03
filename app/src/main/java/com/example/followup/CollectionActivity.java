@@ -13,8 +13,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -57,8 +60,13 @@ public class CollectionActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            List<NewsBookmark> list = new ArrayList<>(task.getResult().toObjects(NewsBookmark.class));
-                            getNewsList(list);
+                            List<NewsBookmark> list = new ArrayList<>();
+                            List<String> ids = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                ids.add(document.getId());
+                                list.add(document.toObject(NewsBookmark.class));
+                            }
+                            getNewsList(list, ids);
                         } else {
                             Log.w("onFailure", "Error getting documents.", task.getException());
                         }
@@ -66,35 +74,36 @@ public class CollectionActivity extends AppCompatActivity {
                 });
     }
 
-    public void getNewsList (List<NewsBookmark> bookmarks) {
-        List<String> ids = new ArrayList<>();
+    public void getNewsList (List<NewsBookmark> bookmarks, List<String> bookmarkIds) {
+        List<String> newsIds = new ArrayList<>();
         for (NewsBookmark item : bookmarks) {
-            ids.add(item.getNewsId());
+            newsIds.add(item.getNewsId());
         }
         db.collection("newslist")
-                .whereIn("id", ids)
+                .whereIn("id", newsIds)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    List<NewsItem> list = new ArrayList<>();
-                    List<String> ids = new ArrayList<>();
+                    List<NewsItem> newsList = new ArrayList<>();
+                    List<String> newsIds = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        ids.add(document.getId());
-                        list.add(document.toObject(NewsItem.class));
+                        newsIds.add(document.getId());
+                        newsList.add(document.toObject(NewsItem.class));
                     }
                     ListView mListView = findViewById(R.id.news_list);
-                    mListView.setAdapter(new NewsAdapter(getApplicationContext(), list));
+                    NewsAdapter newsAdapter = new NewsAdapter(getApplicationContext(), newsList);
+                    mListView.setAdapter(newsAdapter);
                     //click to go to article
                     mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView arg0, View arg1, int
                                 position,long arg3) {
                             Intent i = new Intent(getApplicationContext(), ArticleActivity.class);
-                            i.putExtra("id", ids.get(position));
-                            i.putExtra("link", list.get(position).getLink());
-                            i.putExtra("eventId", list.get(position).getEventId());
+                            i.putExtra("id", newsIds.get(position));
+                            i.putExtra("link", newsList.get(position).getLink());
+                            i.putExtra("eventId", newsList.get(position).getEventId());
                             startActivity(i);
                         }
                     });
@@ -107,7 +116,30 @@ public class CollectionActivity extends AppCompatActivity {
                                     .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            Log.i("YES" , String.valueOf(position));
+                                            //find id position in bookmarkIds
+                                            String deleteId = "";
+                                            for (int i = 0; i < bookmarks.size() ;i++) {
+                                                if (bookmarks.get(i).getNewsId().equals(newsList.get(position).getId())) {
+                                                    deleteId = bookmarkIds.get(i);
+                                                }
+                                            }
+                                            db.collection("newsmarklist").document(deleteId)
+                                                    .delete()
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Log.d("delete", "DocumentSnapshot successfully deleted!");
+                                                            Toast.makeText(getApplicationContext(), "Delete Success!", Toast.LENGTH_LONG).show();
+                                                            newsList.remove(position);
+                                                            newsAdapter.notifyDataSetChanged();
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.w("delete", "Error deleting document", e);
+                                                        }
+                                                    });
                                         }
                                     })
                                     .setNegativeButton("NO", new DialogInterface.OnClickListener() {

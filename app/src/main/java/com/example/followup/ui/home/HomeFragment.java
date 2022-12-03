@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.MenuHost;
@@ -182,6 +183,9 @@ public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwn
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 ids.add(document.getId());
                                 list.add(document.toObject(NewsItem.class));
+                            }
+                            if (list.size() == 0) {
+                                Toast.makeText(getActivity().getApplicationContext(), "No result", Toast.LENGTH_LONG).show();
                             }
                             ListView mListView = getView().findViewById(R.id.news_list);
                             mListView.setAdapter(new NewsAdapter(getActivity().getApplicationContext(), list));

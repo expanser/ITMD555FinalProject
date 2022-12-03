@@ -75,9 +75,14 @@ public class CollectionActivity extends AppCompatActivity {
     }
 
     public void getNewsList (List<NewsBookmark> bookmarks, List<String> bookmarkIds) {
+        //due to the restriction of google firebase, whereIn clause can only return 10 records most.
         List<String> newsIds = new ArrayList<>();
         for (NewsBookmark item : bookmarks) {
             newsIds.add(item.getNewsId());
+        }
+        if (newsIds.size() == 0) {
+            Toast.makeText(getApplicationContext(), "No result", Toast.LENGTH_LONG).show();
+            return;
         }
         db.collection("newslist")
                 .whereIn("id", newsIds)

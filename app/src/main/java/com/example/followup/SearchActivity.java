@@ -65,6 +65,9 @@ public class SearchActivity extends AppCompatActivity {
                                 ids.add(document.getId());
                                 list.add(document.toObject(NewsItem.class));
                             }
+                            if (list.size() == 0) {
+                                Toast.makeText(getApplicationContext(), "No result", Toast.LENGTH_LONG).show();
+                            }
                             ListView mListView = findViewById(R.id.news_list);
                             mListView.setAdapter(new NewsAdapter(getApplicationContext(), list));
                             //click to go to article

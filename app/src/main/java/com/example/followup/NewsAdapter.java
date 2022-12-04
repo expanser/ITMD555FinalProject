@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +54,7 @@ public class NewsAdapter extends BaseAdapter {
         title.setText(newsSource.get(position).getTitle());
         source = convertView.findViewById(R.id.newsSource);
         source.setText(newsSource.get(position).getSource());
-        new ImageLoader((ImageView) convertView.findViewById(R.id.newsThumb)).execute(newsSource.get(position).getThumbnail());
+        Picasso.get().load(newsSource.get(position).getThumbnail()).into((ImageView) convertView.findViewById(R.id.newsThumb));
 
         return convertView;
     }

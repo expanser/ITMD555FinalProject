@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -63,7 +65,7 @@ public class EventAdapter extends BaseAdapter {
                         ZoneId.of("America/Chicago"));
         eventDate.setText(dtf.format(triggerTime));
 
-        new ImageLoader((ImageView) convertView.findViewById(R.id.eventThumb)).execute(eventList.get(position).getThumbnail());
+        Picasso.get().load(eventList.get(position).getThumbnail()).into((ImageView) convertView.findViewById(R.id.eventThumb));
 
         return convertView;
     }

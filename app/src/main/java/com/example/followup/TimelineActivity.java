@@ -28,6 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 public class TimelineActivity extends AppCompatActivity {
 
@@ -117,7 +118,7 @@ public class TimelineActivity extends AppCompatActivity {
 
                             TextView titleView = findViewById(R.id.titleView);
                             titleView.setText(eventItem.getTitle());
-                            new ImageLoader((ImageView) findViewById(R.id.eventThumb)).execute(eventItem.getThumbnail());
+                            Picasso.get().load(eventItem.getThumbnail()).into((ImageView) findViewById(R.id.eventThumb));
                         } else {
                             Log.w("onFailure", "Error getting documents.", task.getException());
                         }

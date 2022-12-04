@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -66,7 +68,7 @@ public class TimelineAdapter extends BaseAdapter {
                         ZoneId.of("America/Chicago"));
         newsDate.setText(dtf.format(triggerTime));
 
-        new ImageLoader((ImageView) convertView.findViewById(R.id.newsThumb)).execute(timelineList.get(position).getThumbnail());
+        Picasso.get().load(timelineList.get(position).getThumbnail()).into((ImageView) convertView.findViewById(R.id.newsThumb));
 
         return convertView;
     }

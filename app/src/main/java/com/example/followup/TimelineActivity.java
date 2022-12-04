@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class TimelineActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     SharedPreferences sharedPreferences;
     String eventId;
+    private ProgressBar progressBarRound;
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -127,6 +129,10 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     public void getTimelineList () {
+        //set progressBar
+        progressBarRound = (ProgressBar) findViewById(R.id.progressBarRound);
+        progressBarRound.setVisibility(View.VISIBLE);
+
         db.collection("newslist")
                 .whereEqualTo("eventId", eventId)
                 .orderBy("releaseTime", Query.Direction.DESCENDING)
@@ -134,6 +140,7 @@ public class TimelineActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                progressBarRound.setVisibility(View.INVISIBLE);
                 if (task.isSuccessful()) {
                     List<NewsItem> list = new ArrayList<>();
                     List<String> ids = new ArrayList<>();

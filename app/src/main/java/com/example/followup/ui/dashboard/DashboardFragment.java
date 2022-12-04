@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,7 +23,6 @@ import com.example.followup.CollectionActivity;
 import com.example.followup.EventAdapter;
 import com.example.followup.EventBookmark;
 import com.example.followup.EventItem;
-import com.example.followup.HomeActivity;
 import com.example.followup.R;
 import com.example.followup.TimelineActivity;
 import com.example.followup.databinding.FragmentDashboardBinding;
@@ -43,6 +43,7 @@ public class DashboardFragment extends Fragment {
     private FragmentDashboardBinding binding;
     private FirebaseFirestore db;
     SharedPreferences sharedPreferences;
+    private ProgressBar progressBarRound;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -71,40 +72,6 @@ public class DashboardFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         getMyEventCollections();
-        //add list
-        ListView mListView = getView().findViewById(R.id.event_list);
-        mListView.setAdapter(new EventAdapter(this.getContext(), new ArrayList<>()));
-        //click to go to timeline
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView arg0, View arg1, int
-                    position,long arg3) {
-                Intent i = new Intent(getActivity().getApplicationContext(), TimelineActivity.class);
-                i.putExtra("position", position);
-                startActivity(i);
-            }
-        });
-        //long click to delete
-        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                new AlertDialog.Builder(getActivity()).setTitle("Confirm Delete")
-                        .setMessage("Are you sure to delete this event?")
-                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Log.i("YES" , String.valueOf(position));
-                            }
-                        })
-                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Log.i("NO" , String.valueOf(position));
-                            }
-                        }).show();
-                return true;
-            }
-        });
     }
 
     @Override
@@ -114,6 +81,10 @@ public class DashboardFragment extends Fragment {
     }
 
     public void getMyEventCollections() {
+        //set progressBar
+        progressBarRound = (ProgressBar) getView().findViewById(R.id.progressBarRound);
+        progressBarRound.setVisibility(View.VISIBLE);
+
         sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         String userId = sharedPreferences.getString("id","");
 
@@ -132,6 +103,7 @@ public class DashboardFragment extends Fragment {
                             }
                             getEventList(list, ids);
                         } else {
+                            progressBarRound.setVisibility(View.INVISIBLE);
                             Log.w("onFailure", "Error getting documents.", task.getException());
                         }
                     }
@@ -145,6 +117,7 @@ public class DashboardFragment extends Fragment {
             eventIds.add(item.getEventId());
         }
         if (eventIds.size() == 0) {
+            progressBarRound.setVisibility(View.INVISIBLE);
             Toast.makeText(getActivity().getApplicationContext(), "No result", Toast.LENGTH_LONG).show();
             return;
         }
@@ -154,6 +127,7 @@ public class DashboardFragment extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        progressBarRound.setVisibility(View.INVISIBLE);
                         if (task.isSuccessful()) {
                             List<EventItem> eventList = new ArrayList<>();
                             List<String> eventIds = new ArrayList<>();

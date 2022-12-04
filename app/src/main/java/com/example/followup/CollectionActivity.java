@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,6 +31,7 @@ public class CollectionActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
     SharedPreferences sharedPreferences;
+    private ProgressBar progressBarRound;
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -50,6 +52,10 @@ public class CollectionActivity extends AppCompatActivity {
     }
 
     public void getMyNewsCollections() {
+        //set progressBar
+        progressBarRound = (ProgressBar) findViewById(R.id.progressBarRound);
+        progressBarRound.setVisibility(View.VISIBLE);
+
         sharedPreferences = getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         String userId = sharedPreferences.getString("id","");
 
@@ -68,6 +74,7 @@ public class CollectionActivity extends AppCompatActivity {
                             }
                             getNewsList(list, ids);
                         } else {
+                            progressBarRound.setVisibility(View.INVISIBLE);
                             Log.w("onFailure", "Error getting documents.", task.getException());
                         }
                     }
@@ -81,6 +88,7 @@ public class CollectionActivity extends AppCompatActivity {
             newsIds.add(item.getNewsId());
         }
         if (newsIds.size() == 0) {
+            progressBarRound.setVisibility(View.INVISIBLE);
             Toast.makeText(getApplicationContext(), "No result", Toast.LENGTH_LONG).show();
             return;
         }
@@ -90,6 +98,7 @@ public class CollectionActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                progressBarRound.setVisibility(View.INVISIBLE);
                 if (task.isSuccessful()) {
                     List<NewsItem> newsList = new ArrayList<>();
                     List<String> newsIds = new ArrayList<>();

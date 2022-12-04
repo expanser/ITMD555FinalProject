@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.MenuHost;
@@ -51,6 +52,7 @@ public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwn
     private FirebaseFirestore db;
     private String querySource = "";
     private String queryType = "";
+    private ProgressBar progressBarRound;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -160,6 +162,10 @@ public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwn
     }
 
     public void getNewsList() {
+        //set progressBar
+        progressBarRound = (ProgressBar) getView().findViewById(R.id.progressBarRound);
+        progressBarRound.setVisibility(View.VISIBLE);
+
         Query query = null;
         if (querySource.equals("") && queryType.equals("")) {
             query = db.collection("newslist");
@@ -177,6 +183,7 @@ public class HomeFragment extends Fragment implements MenuProvider, LifecycleOwn
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        progressBarRound.setVisibility(View.INVISIBLE);
                         if (task.isSuccessful()) {
                             List<NewsItem> list = new ArrayList<>();
                             List<String> ids = new ArrayList<>();
